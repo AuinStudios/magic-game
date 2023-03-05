@@ -9,7 +9,7 @@ public class Camerafollow : MonoBehaviour
     [SerializeField] private Transform playerotation;
     [SerializeField] private Transform shiftlockoffset;
 
-    private Vector3 input;
+     private Vector3 input;
 
     [Header("smoothnessforcamera")]
     private Quaternion smoothmovementy = Quaternion.identity;
@@ -18,8 +18,8 @@ public class Camerafollow : MonoBehaviour
     [Header("cameraoffset")]
     [SerializeField] private float inputz = -6;
     [Header("collider stuff")]
-   
-   private Vector3 dollydir;
+
+    private Vector3 dollydir;
     private Vector3 cameradesiredpos;
 
     private bool shiftlock = false;
@@ -46,11 +46,11 @@ public class Camerafollow : MonoBehaviour
         inputz = Mathf.Clamp(inputz, maxdistance, mindistance);
         input.y = Mathf.Clamp(input.y, mindistance, 70);
 
-
+        input.x = input.x > 360 || input.x < -360 ? input.x = 0 : input.x;
         //transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0, 0, test), 9 * Time.deltaTime);
-         smoothmovementy = Quaternion.Euler(input.y, 0, 0);
+        smoothmovementy = Quaternion.Euler(input.y, 0, 0);
         smoothmovementx = Quaternion.Euler(0, -input.x, 0);
-        camerarotation.rotation = Quaternion.Slerp(camerarotation.rotation, smoothmovementx,   Time.deltaTime * 11);
+        camerarotation.rotation = Quaternion.Slerp(camerarotation.rotation, smoothmovementx, Time.deltaTime * 11);
         shiftlockoffset.localRotation = Quaternion.Slerp(shiftlockoffset.localRotation, smoothmovementy, Time.deltaTime * 11);
         camerarotation.position = playerotation.position;
 
@@ -68,30 +68,29 @@ public class Camerafollow : MonoBehaviour
         }
         else
         {
-            cameradesiredpos = shiftlockoffset.TransformPoint(new Vector3(transform.localPosition.x  * -maxdistance , transform.localPosition.y * -maxdistance , dollydir.z * - maxdistance));
-           
+            cameradesiredpos = shiftlockoffset.TransformPoint(new Vector3(transform.localPosition.x * -maxdistance, transform.localPosition.y * -maxdistance, dollydir.z * -maxdistance));
+
         }
 
-        if (Physics.Linecast(camerarotation.position,cameradesiredpos, out RaycastHit hitt))
+        if (Physics.Linecast(camerarotation.position, cameradesiredpos, out RaycastHit hitt))
         {
-           
+
             collidervalue = Mathf.Clamp(-hitt.distance * 0.9f, maxdistance, mindistance);
-            
+
             if (-hitt.distance >= inputz)
             {
-             transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0, 0, collidervalue), 20 * Time.deltaTime);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0, 0, collidervalue), 20 * Time.deltaTime);
             }
             else
             {
+
                 transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(transform.localPosition.x, transform.localPosition.y, inputz), 20 * Time.deltaTime);
             }
-            
+
         }
         else
         {
-           // inputz = Mathf.Clamp(inputz, maxdistance, mindistance);
             transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(transform.localPosition.x, transform.localPosition.y, inputz), 20 * Time.deltaTime);
-
         }
 
     }
