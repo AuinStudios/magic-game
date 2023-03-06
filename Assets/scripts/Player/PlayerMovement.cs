@@ -15,13 +15,21 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 direction = Vector2.zero;
     private Vector3 move = Vector3.zero;
     private Vector3 playerlookat = Vector3.zero;
+
+    [Header("smoothmove")]
+    private Vector3 smoothdamp = Vector3.one * 10;
+    private Vector3 smoothmove = Vector3.zero;
+    [SerializeField] private float smoothness = 5.0f;
     [Header("Quaternions")]
     private Quaternion playerot = Quaternion.identity;
     [Header("gravity")]
     private float gravityForce = -9.81f;
     [Header("runspeed and mutlpler")]
+    [SerializeField]
     private float currentRunSpeedMultiplier = 1.0f;
     private float walkSpeed = 5.0f;
+    private float maxspeed = 3.0f;
+    private Vector3 a = Vector3.zero;
     [Header("Checkifgrounded")]
     private bool isGrounded = false;
     [Header("Jump")]
@@ -29,30 +37,36 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        direction = new(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        move = currentRunSpeedMultiplier * walkSpeed * (Vector3.Normalize(maincam.transform.right * direction.x + maincamparent.forward * direction.y));
-        if(direction.x != 0 && maincam.shiftlock == false || direction.y != 0 && maincam.shiftlock == false)
-        {
-         playerlookat = maincam.transform.position - transform.position;
-            playerlookat = new Vector3(playerlookat.x  , 0, playerlookat.z );
-         playerot = Quaternion.LookRotation(-playerlookat);
 
+        direction = new(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        
+        move = currentRunSpeedMultiplier * walkSpeed * (Vector3.Normalize(maincam.transform.right * direction.x + maincamparent.forward * direction.y));
+        Debug.Log(move);
+        smoothmove = Vector3.SmoothDamp(Player.velocity, move, ref smoothdamp, smoothness * Time.deltaTime);
+        if (direction.x != 0 && maincam.shiftlock == false || direction.y != 0 && maincam.shiftlock == false)
+        {
+            playerlookat = maincam.transform.position - transform.position;
+            playerlookat = new Vector3(playerlookat.x, 0, playerlookat.z);
+            playerot = Quaternion.LookRotation(-playerlookat);
+          
             transform.rotation = Quaternion.Slerp(transform.rotation, playerot, 11 * Time.deltaTime);
         }
-        
-        Player.Move(move * Time.deltaTime);
+
+        // if(direction.x)
+       
+        Player.Move(smoothmove * Time.deltaTime);
         // gravity stuff ------------------------
         velocity.y = GetGravityForce();
-      
-         Player.Move(velocity * Time.deltaTime);
-        
-        
+
+        Player.Move(velocity * Time.deltaTime);
+
+
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             velocity.y = JumpForce;
