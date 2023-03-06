@@ -27,18 +27,20 @@ public class PlayerMovement : MonoBehaviour
     [Header("runspeed and mutlpler")]
     [SerializeField]
     private float currentRunSpeedMultiplier = 1.0f;
-    private float walkSpeed = 5.0f;
-    private float maxspeed = 3.0f;
-    private Vector3 a = Vector3.zero;
+   // private float walkSpeed = 5.0f;
+    private float maxspeed = 5.0f;
+    private float accl = 13.0f;
+    private float deaccl = 0.0f;
+  //[SerializeField]  private float accleration = 0.7f;
     [Header("Checkifgrounded")]
     private bool isGrounded = false;
     [Header("Jump")]
     private float JumpForce = 5;
     // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    //void Start()
+    //{
+    //    deaccl = maxspeed;
+    //}
 
     // Update is called once per frame
     void Update()
@@ -46,9 +48,19 @@ public class PlayerMovement : MonoBehaviour
 
         direction = new(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         
-        move = currentRunSpeedMultiplier * walkSpeed * (Vector3.Normalize(maincam.transform.right * direction.x + maincamparent.forward * direction.y));
-        Debug.Log(move);
-        smoothmove = Vector3.SmoothDamp(Player.velocity, move, ref smoothdamp, smoothness * Time.deltaTime);
+        if (direction.x != 0 || direction.y != 0)
+        {
+            deaccl = Mathf.Clamp(deaccl, 0, maxspeed);
+            deaccl = deaccl < maxspeed? deaccl += accl * Time.deltaTime : deaccl = maxspeed;
+            move = currentRunSpeedMultiplier * maxspeed * (Vector3.Normalize(maincam.transform.right * direction.x + maincamparent.forward * direction.y));
+        }
+        else if(deaccl > 0)
+        {
+            deaccl -= accl * Time.deltaTime;
+        }
+        deaccl = deaccl < 0 ? deaccl = 0 : deaccl;
+        Debug.Log(deaccl);
+       // smoothmove = Vector3.SmoothDamp(Player.velocity, move, ref smoothdamp, smoothness * Time.deltaTime);
         if (direction.x != 0 && maincam.shiftlock == false || direction.y != 0 && maincam.shiftlock == false)
         {
             playerlookat = maincam.transform.position - transform.position;
@@ -59,8 +71,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // if(direction.x)
-       
-        Player.Move(smoothmove * Time.deltaTime);
+       // Vector3 speedif = move - Player.velocity;
+      //  Vector3 test = speedif * accleration;
+        Player.Move(  deaccl *  move * Time.deltaTime);
         // gravity stuff ------------------------
         velocity.y = GetGravityForce();
 
