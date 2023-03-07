@@ -86,13 +86,13 @@ public class Camerafollow : MonoBehaviour
             }
             else
             {
-                transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(transform.localPosition.x, transform.localPosition.y, inputz), 11 * Time.deltaTime);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0, 0, inputz), 11 * Time.deltaTime);
             }
 
         }
         else
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(transform.localPosition.x, transform.localPosition.y, inputz), 11 * Time.deltaTime);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0, 0, inputz), 11 * Time.deltaTime);
         }
 
     }

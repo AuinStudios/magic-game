@@ -761,7 +761,7 @@ MonoBehaviour:
     m_Bits: 8
   velocity: {x: 0, y: -9.81, z: 0}
   smoothness: 5
-  currentRunSpeedMultiplier: 0.5
+  currentRunSpeedMultiplier: 0.3
 --- !u!1 &1068052797
 GameObject:
   m_ObjectHideFlags: 0
