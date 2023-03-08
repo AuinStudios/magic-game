@@ -14,8 +14,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Vectors")]
     private Vector2 direction = Vector2.zero;
     private Vector3 move = Vector3.zero;
+
     private Vector3 movedash = Vector3.zero;
+
     private Vector3 frictionlerp = Vector3.zero;
+    private Vector3 frictionref = Vector3.zero;
     [Header("Quaternions")]
     private Quaternion playerot = Quaternion.identity;
     [Header("gravity")]
@@ -32,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
     private float dashtimer = 0.0f;
     private float dashcooldown = 6.0f;
 
-    private float friction = 5.0f;
+    private float friction = 20.0f;
+    private float frictionspeed = 8.0f;
 
     [Header("Checkifgrounded")]
     private bool isGrounded = false;
@@ -45,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         direction = new(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         deaccl = deaccl < 0 ? deaccl = 0 : deaccl;
-        frictionlerp = Vector3.Lerp(frictionlerp, move, friction * Time.deltaTime);
+        frictionlerp = deaccl <= 2? Vector3.zero : frictionlerp;
         dashcooldown = dashcooldown > 0 ? dashcooldown -= 5.0f * Time.deltaTime : dashcooldown = 0.0f;
         dashtimer =  dashtimer > 0? dashtimer -= 10.0f * Time.deltaTime: dashtimer = 0.0f;
         if ( Input.GetKeyDown(KeyCode.LeftShift) && dashcooldown <= 0 )
@@ -61,14 +65,17 @@ public class PlayerMovement : MonoBehaviour
         {
          //   deaccl = Mathf.Clamp(deaccl, 0, normalmaxspeed);
             deaccl =   deaccl < normalmaxspeed ? deaccl += acclrate * Time.deltaTime : deaccl -= acclrate * Time.deltaTime;
-
+             // frictionlerp = Vector3.Lerp(frictionlerp , move, friction * Time.deltatime);
             move = currentRunSpeedMultiplier * normalmaxspeed * (Vector3.Normalize(maincam.transform.right * direction.x + maincamparent.forward * direction.y));
             
         }
         else if(deaccl > 0)
         {
             deaccl -= acclrate * 1.2f * Time.deltaTime;
+            
         }
+
+        frictionlerp = Vector3.SmoothDamp(frictionlerp, move,   ref frictionref  ,friction * Time.deltaTime , frictionspeed);
 
         if (direction.x != 0 && maincam.shiftlock == false || direction.y != 0 && maincam.shiftlock == false)
         {
