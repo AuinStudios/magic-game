@@ -13,7 +13,7 @@ public class forcemagic : MonoBehaviour
     {
         explosioneffect.Stop();
         force.AddForce(transform.forward * 30, ForceMode.Impulse);
-        
+        Destroy(gameObject, 4);
        // Destroy(gameObject, 3);
     }
 
@@ -24,7 +24,7 @@ public class forcemagic : MonoBehaviour
             explosioneffect.Play();
             firestop.Stop(false);
             force.velocity = Vector3.zero;
-           
+            Destroy(gameObject, 0.5f);
                  
           
             
