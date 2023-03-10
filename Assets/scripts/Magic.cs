@@ -21,7 +21,7 @@ public class Magic : MonoBehaviour
             Quaternion e = Quaternion.Euler(camerarot.eulerAngles.x - 1, MainCamParent.eulerAngles.y, 0);
             //Debug.Log(e);
 
-           Instantiate(magic , MainCamParent.position + new Vector3(0.5f,1,0) , e );
+           Instantiate(magic , MainCamParent.position + new Vector3(0,1.5f,0) , e );
         }
     }
 

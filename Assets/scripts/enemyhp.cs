@@ -8,6 +8,7 @@ public class enemyhp : MonoBehaviour
     [SerializeField] private float health = 100.0f;
     [SerializeField] private Transform maincam;
     [SerializeField] private SpriteRenderer healthbar;
+    [SerializeField] private MagicScriptableobject scriptableobject;
     private Vector3 distance;
     private Vector2 test;
     //private Quaternion lookat;
@@ -31,7 +32,8 @@ public class enemyhp : MonoBehaviour
         if (other.CompareTag("Magic"))
         {
             // StopCoroutine(healthdown());
-            health -= 10.0f;
+            health -= scriptableobject.damage;
+            health = Mathf.Clamp(health, 0, 100);
             test.x =  -health / 1000;
         }
     }

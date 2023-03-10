@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private float dashtimer = 0.0f;
     private float dashcooldown = 6.0f;
 
-    private float friction = 4.0f;
+    private float friction = 5.0f;
 
     [Header("Checkifgrounded")]
     private bool isGrounded = false;

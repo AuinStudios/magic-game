@@ -28,22 +28,26 @@ public class Camerafollow : MonoBehaviour
     private float collidervalue = 0.0f;
     private float maxdistance = -6;
     private float mindistance = -1;
+    [Header("Mouse Texture")]
+    [SerializeField] private Texture2D MouseTexture;
     void Start()
     {
+        //Vector2 centerPos = new Vector2(Screen.width / 2, 0);
         input = new Vector3(0, 2);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         dollydir = transform.localPosition.normalized;
         collidervalue = transform.localPosition.magnitude;
+        Cursor.SetCursor(MouseTexture, Vector2.zero,  CursorMode.Auto);
     }
     private void LateUpdate()
     {
-        camerarotation.position =  playerotation.position;
+        camerarotation.position =  playerotation.position + new Vector3(0,0.7f,0);
     }
     // Update is called once per frame
     void Update()
     {
-        input.x += Input.GetAxisRaw("Mouse X") * 100 * Time.fixedDeltaTime;
+        
         input.y += Input.GetAxisRaw("Mouse Y") * 100 * Time.fixedDeltaTime;
         inputz += Input.GetAxisRaw("Mouse ScrollWheel") * 100 * Time.fixedDeltaTime;
 
@@ -51,7 +55,7 @@ public class Camerafollow : MonoBehaviour
         input.y = Mathf.Clamp(input.y, -30, 70);
 
         input.x = input.x > 360 || input.x < -360 ? input.x = 0 : input.x;
-        //transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0, 0, test), 9 * Time.deltaTime);
+        // camera movement -----------------------------------------------------------------------------------------
         smoothmovementy = Quaternion.Euler(input.y, 0, 0);
         smoothmovementx = Quaternion.Euler(0, -input.x, 0);
         camerarotation.rotation = Quaternion.Slerp(camerarotation.rotation, smoothmovementx, Time.deltaTime * 11);
@@ -66,6 +70,7 @@ public class Camerafollow : MonoBehaviour
         }
         else if (shiftlock == true)
         {
+            input.x -= Input.GetAxisRaw("Mouse X") * 100 * Time.fixedDeltaTime;
             smoothplayerrotation = Quaternion.Euler(playerotation.rotation.x, -input.x, playerotation.rotation.z);
             playerotation.rotation = Quaternion.Lerp(playerotation.rotation, smoothplayerrotation, 11 * Time.deltaTime);
             cameradesiredpos = shiftlockoffset.TransformPoint(new Vector3(dollydir.x * -maxdistance , transform.localPosition.y * -maxdistance, dollydir.z * -maxdistance));
@@ -73,6 +78,7 @@ public class Camerafollow : MonoBehaviour
         else
         {
             cameradesiredpos = shiftlockoffset.TransformPoint(new Vector3(transform.localPosition.x * -maxdistance, transform.localPosition.y * -maxdistance, dollydir.z * -maxdistance));
+            input.x += Input.GetAxisRaw("Mouse X") * 100 * Time.fixedDeltaTime;
         }
 
         if (Physics.Linecast(camerarotation.position, cameradesiredpos, out RaycastHit hitt))
@@ -101,6 +107,7 @@ public class Camerafollow : MonoBehaviour
     {
         shiftlockk = shiftlockk == true ? shiftlockk = false : shiftlockk = true;
         shiftlock = shiftlockk;
+        Cursor.visible = shiftlockk;
         return shiftlock;
     }
 
