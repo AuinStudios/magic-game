@@ -21,14 +21,11 @@ public class forcemagic : MonoBehaviour
     {
         if (!other.CompareTag("Player"))
         {
+            explosioneffect.gameObject.SetActive(true);
             explosioneffect.Play();
             firestop.Stop(false);
             force.velocity = Vector3.zero;
             Destroy(gameObject, 0.5f);
-                 
-          
-            
-            Debug.Log("a");
         }
         
         
