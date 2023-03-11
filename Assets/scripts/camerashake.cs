@@ -20,25 +20,34 @@ public class camerashake : MonoBehaviour
     }
     #endregion
     [SerializeField] private Transform maincam;
-    private float timer = 0;
-    public IEnumerator Camerashake( float duration  , float shakepower , Vector3 distancebetweenmagic)
+    private Vector2 timer = Vector2.zero;
+    public void startcamerashake( Vector3 distancebetweenmagic , float distance , float shakepower)
     {
-        float a = (maincam.position - distancebetweenmagic).magnitude;
-        duration -=  (maincam.position - distancebetweenmagic).magnitude;
-        duration /= (maincam.position - distancebetweenmagic).magnitude / shakepower;
-       // Debug.Log((maincam.position - distancebetweenmagic).magnitude);
-        while ( duration> 0)
+        StartCoroutine(Camerashake(30, distance, shakepower, distancebetweenmagic));
+    }
+    public IEnumerator Camerashake( float duration  ,float distance ,  float shakepower , Vector3 distancebetweenmagic)
+    {
+        float a = (maincam.position - distancebetweenmagic).magnitude / distance;
+        while ( duration>  duration /2)
         {
-            timer += Time.deltaTime * 100;
-           // timer -= (maincam.position - distancebetweenmagic).magnitude * 2;
-           // timer = Mathf.Clamp(timer, , 100);
-            Debug.Log(a);
-            //timer += (maincam.position - distancebetweenmagic).magnitude * 0.5f;
-            maincam.position = Vector3.Lerp(maincam.position, new Vector3(maincam.position.x + Mathf.Cos(timer) - a / 1000 / shakepower, maincam.position.y + Mathf.Sin(timer) - a / 1000 / shakepower, maincam.position.z), 10 * Time.deltaTime) ;
+            timer.x = Random.Range(-1.0f,1.0f) ;
+            timer.y = Random.Range(-1.0f, 1.0f);
+            Debug.Log(timer);
+            maincam.position = Vector3.Lerp(maincam.position, new Vector3(maincam.position.x + Mathf.Sin(timer.x) * a / 10 * shakepower   , maincam.position.y + Mathf.Sin(timer.y) * a   / 10  * shakepower,  maincam.position.z),  Time.deltaTime * 20) ;
+            maincam.localRotation = Quaternion.Slerp(maincam.localRotation, Quaternion.Euler(0,  Mathf.Sin(timer.x) * a * 2  ,  Mathf.Sin(timer.y) * a * 2),  Time.deltaTime * 20);
+         //   Debug.Log(duration);
             duration--;
             yield return new WaitForFixedUpdate();
         }
-        timer = 0;
+        while(duration >0 && duration < duration / 2)
+        {
+            maincam.localRotation = Quaternion.Slerp(maincam.localRotation, Quaternion.Euler(0, 0,0), Time.deltaTime * 20);
+            maincam.position = Vector3.Lerp(maincam.position, new Vector3(0,0, maincam.position.z), Time.deltaTime * 20);
+            duration--;
+            yield return new WaitForFixedUpdate();
+        }
+        maincam.localRotation = Quaternion.Euler(0, 0, 0);
         maincam.localPosition = new Vector3(0, 0, maincam.localPosition.z);
+        timer = Vector2.zero;
     }
 }

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: firemagic
   m_EditorClassIdentifier: 
   damage: 5
-  camerashakePower: 1.2
+  camerashakePower: 5
+  distancecamerashake: 25
+  camerashakeduration: 100
   speed: 30

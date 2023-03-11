@@ -6,5 +6,7 @@ public class MagicScriptableobject : ScriptableObject
 {
     public int damage =5;
     public float camerashakePower = 1.2f;
+    public float distancecamerashake = 10.0f;
+    public float camerashakeduration = 100.0f;
     public int speed = 30;
 }
