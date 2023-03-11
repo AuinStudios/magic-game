@@ -29,28 +29,31 @@ public class camerashake : MonoBehaviour
     {
         float a = (maincam.position - distancebetweenmagic).magnitude;
         float force = (1 - Mathf.Clamp01(a / distance));
-
-       
-        while ( duration>  duration / 3)
+        duration = duration - a ;
+        Debug.Log(duration);
+        while ( duration > 0)
         {
           //  timer.x += Time.deltaTime * force;
-           timer.x = Mathf.Lerp(timer.x , Random.Range(-1.0f,1.0f) ,  Time.deltaTime * 20) ;
-           timer.y = Mathf.Lerp(timer.y, Random.Range(-1.0f, 1.0f),  Time.deltaTime* 20);
+           timer.x = Mathf.Lerp(timer.x , Random.Range(-1.0f,1.0f) ,  Time.deltaTime * 10) ;
+           timer.y = Mathf.Lerp(timer.y, Random.Range(-1.0f, 1.0f),  Time.deltaTime* 10);
 
             maincam.position = Vector3.Lerp(maincam.position, new Vector3(maincam.position.x +  Mathf.Sin(timer.x) * force /shakepower, maincam.position.y + Mathf.Sin(timer.y) * force / shakepower,  maincam.position.z),  Time.deltaTime * 20) ;
             maincam.localRotation = Quaternion.Slerp(maincam.localRotation, Quaternion.Euler(0,  Mathf.Sin(timer.x) * force * rotationpower  ,  Mathf.Sin(timer.y) * force * rotationpower),  Time.deltaTime * 20);
             duration--;
             yield return new WaitForFixedUpdate();
         }
-        while(duration >0 && duration < duration / 2)
+        float timercomeback = 0.0f;
+        while(timercomeback <   0.5f)
         {
-            maincam.localRotation = Quaternion.Slerp(maincam.localRotation, Quaternion.Euler(0, 0,0), Time.deltaTime * 20);
-            maincam.position = Vector3.Lerp(maincam.position, new Vector3(0,0, maincam.position.z), Time.deltaTime * 20);
+            timercomeback += 1.0f * Time.deltaTime;
+           // Debug.Log(timercomeback);
+            maincam.localRotation = Quaternion.Slerp(maincam.localRotation, Quaternion.Euler(0, 0,0), timercomeback /0.5f);
+            maincam.localPosition = Vector3.Lerp(maincam.localPosition, new Vector3(0,0, maincam.localPosition.z), timercomeback / 0.5f);
             duration--;
             yield return new WaitForFixedUpdate();
         }
-        maincam.localRotation = Quaternion.Euler(0, 0, 0);
-        maincam.localPosition = new Vector3(0, 0, maincam.localPosition.z);
+       // maincam.localRotation = Quaternion.Euler(0, 0, 0);
+       // maincam.localPosition = new Vector3(0, 0, maincam.localPosition.z);
         timer = Vector2.zero;
     }
 }
