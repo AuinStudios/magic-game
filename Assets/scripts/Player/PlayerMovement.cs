@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private Vector3 velocity = Vector3.zero;
+     private Vector3 velocity = Vector3.zero;
     [Header("Vectors")]
     private Vector2 direction = Vector2.zero;
     private Vector3 move = Vector3.zero;
@@ -22,20 +22,25 @@ public class PlayerMovement : MonoBehaviour
     private Quaternion playerot = Quaternion.identity;
     [Header("gravity")]
     private float gravityForce = -9.81f;
-    [Header("runspeed and mutlpler")]
+    [Header("runspeedmultiplier")]
     [SerializeField]
     private float currentRunSpeedMultiplier = 1.0f;
     private float maxspeed = 20.0f;
     private float normalmaxspeed = 7.0f;
-
+    [Header("accleration")]
     private float acclrate = 15.0f;
     private float deaccl = 0.0f;
-
+    [Header("Dash")]
     private float dashtimer = 0.0f;
     private float dashcooldown = 6.0f;
-
-    private float friction = 5.0f;
-
+    [Header("Friction")]
+    private float friction = 4.5f;
+    [Header("Coyote time")]
+    private float coyotetime = 0.2f;
+    private float coyotetimecounter;
+    [Header("JumpBuffer")]
+    private float jumpbuffertime = 0.2f;
+    private float jumpbuffercounter;
     [Header("Checkifgrounded")]
     private bool isGrounded = false;
     [Header("Jump")]
@@ -85,9 +90,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isGrounded)
         {
+            coyotetimecounter -= Time.deltaTime;
             deaccl -= acclrate / 10 * Time.deltaTime;
         }
-
+        else
+        {
+            coyotetimecounter = coyotetime;
+        }
         // move charater ---------------------------
 
         if(dashtimer <= 0)
@@ -106,9 +115,22 @@ public class PlayerMovement : MonoBehaviour
 
         Player.Move(velocity * Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            velocity.y = JumpForce;
+            jumpbuffercounter = jumpbuffertime;
+            
+        }
+        else
+        {
+            jumpbuffercounter -= Time.deltaTime;
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            coyotetimecounter = 0.0f;
+        }
+        if( coyotetimecounter > 0.0f && jumpbuffercounter > 0.0f)
+        {
+           velocity.y = JumpForce;
         }
     }
     private void dash()
@@ -126,8 +148,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded && velocity.y < 0.0f)
         {
-            velocity.y = gravityForce;
+            velocity.y = 0;
         }
+    
         velocity.y += gravityForce * Time.deltaTime;
 
         return velocity.y;

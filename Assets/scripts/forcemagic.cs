@@ -24,7 +24,7 @@ public class forcemagic : MonoBehaviour
         if (!other.CompareTag("Player") && !other.CompareTag("Magic") && onlyonce == false )
         {
             onlyonce = true;
-            camerashake.Instance.startcamerashake(transform.position , scriptableobject.distancecamerashake , scriptableobject.camerashakePower);
+            camerashake.Instance.startcamerashake(transform.position ,scriptableobject.camerarotationpower  , scriptableobject.distancecamerashake , scriptableobject.camerashakePower);
             explosioneffect.gameObject.SetActive(true);
             explosioneffect.Play();
             firestop.Stop(false);

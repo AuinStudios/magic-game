@@ -973,7 +973,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  velocity: {x: 0, y: -9.81, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
   currentRunSpeedMultiplier: 0.3
 --- !u!1 &1171407680
 GameObject:
@@ -1239,7 +1239,7 @@ GameObject:
   - component: {fileID: 1812183726}
   - component: {fileID: 1812183725}
   - component: {fileID: 1812183724}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
