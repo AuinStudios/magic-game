@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6089773752230090056
 Transform:
   m_ObjectHideFlags: 0
@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 43656331183686892}
   m_LocalRotation: {x: -0.000000059604638, y: -0.000000014901159, z: 0.000000014901159,
     w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.000000011511, y: 0, z: 0.0000000017382}
+  m_LocalScale: {x: 0.44071954, y: 0.44071954, z: 0.44071954}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3605486962282685221}
@@ -50,7 +50,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -750,7 +750,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 9.56
       mode: 0
       spread: 0
       speed:
@@ -813,7 +813,7 @@ ParticleSystem:
       speed:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 1
+        scalar: 0
         minScalar: 1
         maxCurve:
           serializedVersion: 2
@@ -2631,7 +2631,7 @@ ParticleSystem:
     magnitude:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4884,7 +4884,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 5
   m_Center: {x: -0.000000044703484, y: 0, z: 0.00000023841858}
 --- !u!1 &430591818275479008
 GameObject:
@@ -9780,3 +9780,7 @@ MonoBehaviour:
   explosioneffect: {fileID: 2893220811074922739}
   firestop: {fileID: 6214028975746973076}
   scriptableobject: {fileID: 11400000, guid: 6b1d4a77ab02b244494d45544fbbc191, type: 2}
+  explosionsizeshake: {fileID: 4989535015955625125}
+  layertobringinobjects:
+    serializedVersion: 2
+    m_Bits: 1

@@ -21,24 +21,24 @@ public class camerashake : MonoBehaviour
     #endregion
     [SerializeField] private Transform maincam;
     private Vector2 timer = Vector2.zero;
-    public void startcamerashake( Vector3 distancebetweenmagic, float rotationpower , float distance , float shakepower)
+    public void startcamerashake( Vector3 distancebetweenmagic, float rotationpower , float distance , float shakepower , SphereCollider size)
     {
-        StartCoroutine(Camerashake(30, distance, shakepower,  rotationpower, distancebetweenmagic));
+        StartCoroutine(Camerashake(30, distance, shakepower,  rotationpower, distancebetweenmagic , size));
     }
-    public IEnumerator Camerashake( float duration  ,float distance ,float rotationpower  , float shakepower , Vector3 distancebetweenmagic)
+    public IEnumerator Camerashake( float duration  ,float distance ,float rotationpower  , float shakepower , Vector3 distancebetweenmagic , SphereCollider size)
     {
         float a = (maincam.position - distancebetweenmagic).magnitude;
         float force = (1 - Mathf.Clamp01(a / distance));
         duration = duration - a ;
-        Debug.Log(duration);
+       
         while ( duration > 0)
         {
           //  timer.x += Time.deltaTime * force;
            timer.x = Mathf.Lerp(timer.x , Random.Range(-1.0f,1.0f) ,  Time.deltaTime * 10) ;
            timer.y = Mathf.Lerp(timer.y, Random.Range(-1.0f, 1.0f),  Time.deltaTime* 10);
-
-            maincam.position = Vector3.Lerp(maincam.position, new Vector3(maincam.position.x +  Mathf.Sin(timer.x) * force /shakepower, maincam.position.y + Mathf.Sin(timer.y) * force / shakepower,  maincam.position.z),  Time.deltaTime * 20) ;
-            maincam.localRotation = Quaternion.Slerp(maincam.localRotation, Quaternion.Euler(0,  Mathf.Sin(timer.x) * force * rotationpower  ,  Mathf.Sin(timer.y) * force * rotationpower),  Time.deltaTime * 20);
+           //  Debug.Log(Mathf.Sin(timer.x) * force * size.radius  );
+            maincam.position = Vector3.Lerp(maincam.position, new Vector3(maincam.position.x +  Mathf.Sin(-timer.x) * -force /shakepower ,maincam.position.y + Mathf.Sin(timer.y) * force /shakepower,  maincam.position.z),  Time.deltaTime * 20) ;
+            maincam.localRotation = Quaternion.Slerp(maincam.localRotation, Quaternion.Euler(0,  Mathf.Sin(timer.x) * force * rotationpower   ,  Mathf.Sin(-timer.y) * -force * rotationpower),  Time.deltaTime * 20);
             duration--;
             yield return new WaitForFixedUpdate();
         }
