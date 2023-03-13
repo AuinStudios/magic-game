@@ -16,9 +16,9 @@ public class oceanwave : MonoBehaviour
     void Start()
     {
         // mesh.vertices = generatevertices();
-        mesh.vertices = messh.vertices;
-        mesh.triangles = messh.triangles;
-        mesh.bounds = messh.bounds;
+       // mesh.vertices = messh.vertices;
+       // mesh.triangles = messh.triangles;
+       // mesh.normals = messh.normals;
         mesh.RecalculateBounds();
     }
     private Vector3[] generatevertices()
