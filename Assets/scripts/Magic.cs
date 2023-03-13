@@ -23,7 +23,7 @@ public class Magic : MonoBehaviour
     [SerializeField] private Transform camerarot;
     [SerializeField] private GameObject magic;
     public List<MagicScriptableobject> magicmoves;
-    [SerializeField] private List<KeyCode> typeofmagic;
+    public List<KeyCode> typeofmagic;
   [HideInInspector]  public int currentcount = 0;
     // Start is called before the first frame update
     void Start()
@@ -41,7 +41,7 @@ public class Magic : MonoBehaviour
                 currentcount = i;
                 Quaternion e = Quaternion.Euler(camerarot.eulerAngles.x - 1, MainCamParent.eulerAngles.y, 0);
                
-                Instantiate(magic , MainCamParent.position + new Vector3(0,1.5f,0) , e );
+                Instantiate(magicmoves[i].typeofmagic , MainCamParent.position + new Vector3(0,1.5f,0) , e );
             }
         }
         //foreach (KeyCode kcode in typeofmagic)
