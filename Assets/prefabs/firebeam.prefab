@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3605486962282685221}
   - component: {fileID: 6214028975746973076}
   - component: {fileID: 7136796527861467566}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -1042,7 +1042,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
+          value: 0.52702713
           inSlope: -2
           outSlope: -2
           tangentMode: 0
@@ -4840,7 +4840,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -4884,7 +4884,7 @@ GameObject:
   - component: {fileID: 5307001040663145044}
   - component: {fileID: 3884247504330668445}
   - component: {fileID: 5127630387744124379}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: firebeam
   m_TagString: Magic
   m_Icon: {fileID: 0}
@@ -4938,7 +4938,6 @@ MonoBehaviour:
   force: {fileID: 1224405586948984663}
   explosioneffect: {fileID: 0}
   firestop: {fileID: 6214028975746973076}
-  explosionsizeshake: {fileID: 0}
   mesh: {fileID: 5307001040663145044}
   layertobringinobjects:
     serializedVersion: 2

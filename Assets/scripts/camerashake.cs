@@ -37,8 +37,8 @@ public class camerashake : MonoBehaviour
            timer.x = Mathf.Lerp(timer.x , Random.Range(-1.0f,1.0f) ,  Time.deltaTime * 10) ;
            timer.y = Mathf.Lerp(timer.y, Random.Range(-1.0f, 1.0f),  Time.deltaTime* 10);
            //  Debug.Log(Mathf.Sin(timer.x) * force * size.radius  );
-            maincam.position = Vector3.Lerp(maincam.position, new Vector3(maincam.position.x +  Mathf.Sin(-timer.x) * -force /shakepower ,maincam.position.y + Mathf.Sin(timer.y) * force /shakepower,  maincam.position.z),  Time.deltaTime * 20) ;
-            maincam.localRotation = Quaternion.Slerp(maincam.localRotation, Quaternion.Euler(0,  Mathf.Sin(timer.x) * force * rotationpower   ,  Mathf.Sin(-timer.y) * -force * rotationpower),  Time.deltaTime * 20);
+            maincam.position = Vector3.Lerp(maincam.position, new Vector3(maincam.position.x +  Mathf.Sin(timer.x) * force /shakepower ,maincam.position.y + Mathf.Sin(timer.y) * force /shakepower,  maincam.position.z),  Time.deltaTime * 20) ;
+            maincam.localRotation = Quaternion.Slerp(maincam.localRotation, Quaternion.Euler(0,  Mathf.Sin(timer.x) * force * rotationpower   ,  Mathf.Sin(timer.y) * -force * rotationpower),  Time.deltaTime * 20);
             duration--;
             yield return new WaitForFixedUpdate();
         }

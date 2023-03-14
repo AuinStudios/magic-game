@@ -15,76 +15,48 @@ public class forcemagic : MonoBehaviour
 
     private bool onlyonce = false;
     private int savecurrent = 0;
-    private SphereCollider sphere;
-    private BoxCollider box;
+  [SerializeField]  private SphereCollider sphereradius;
     // Start is called before the first frame update
     void Awake()
     {
-
-
         savecurrent = Magic.Instance.currentcount;
-        if(Magic.Instance.magicmoves[savecurrent].test is SphereCollider)
-        {
-            sphere = (SphereCollider)Magic.Instance.magicmoves[savecurrent].test; 
-            sphere.radius = 0.5f;
-        }
-        else if(Magic.Instance.magicmoves[savecurrent].test is BoxCollider)
-        {
-            box = (BoxCollider)Magic.Instance.magicmoves[savecurrent].test;
-        }
-       
-        if (Magic.Instance.magicmoves[savecurrent].beammode == false)
-        {
-            force.AddForce(transform.forward * Magic.Instance.magicmoves[savecurrent].speed, ForceMode.Impulse);
+        //float b =   Magic.Instance.magicmoves[savecurrent].howmanytimestoshoot;
+        float a = (transform.localScale.x )   * Magic.Instance.magicmoves[savecurrent].radiuspercentage / 100;
+       // a /= 2;
+      a =  Mathf.Clamp(a, 0.1f, 0.5f);
+        force.AddForce(transform.forward * Magic.Instance.magicmoves[savecurrent].speed + transform.right * Random.Range(-Magic.Instance.magicmoves[savecurrent].spread , Magic.Instance.magicmoves[savecurrent].spread) / Magic.Instance.magicmoves[savecurrent].radiuspercentage + transform.up * Random.Range(-Magic.Instance.magicmoves[savecurrent].spread, Magic.Instance.magicmoves[savecurrent].spread) / Magic.Instance.magicmoves[savecurrent].radiuspercentage, ForceMode.Impulse);
             explosioneffect.gameObject.SetActive(false);
             explosioneffect.Stop();
-        }
-        else
-        {
-            var a = firestop.shape;
-            a.length = (Magic.Instance.magicmoves[savecurrent].timeruntllstop / 100) * Magic.Instance.magicmoves[savecurrent].lengthpercentage;
-            Destroy(gameObject, 0.5f);
-        }
-        // aa = (Magic.Instance.magicmoves[savecurrent].timeruntllstop / 100) * 10;
-        // Debug.Log(aa);
+        transform.localScale = new Vector3(a,a,a);
         Destroy(gameObject, 4);
-        // Destroy(gameObject, 3);
     }
     private void Update()
     {
 
         if (Input.GetKeyUp(Magic.Instance.typeofmagic[savecurrent]) && Magic.Instance.magicmoves[savecurrent].detonateion == true && onlyonce == false)
         {
-            explosion();
+           explosion();
           
         }
-        // if (Magic.Instance.magicmoves[savecurrent].beammode == true)
-        // {
-        //     timeuntllstop += Magic.Instance.magicmoves[savecurrent].timeruntllstop * Time.deltaTime;
-        //     if (timeuntllstop > aa)
-        //     {
-        //         force.velocity = Vector3.zero;
-        //     }
-        // }
-
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player") && !other.CompareTag("Magic") && onlyonce == false && Magic.Instance.magicmoves[savecurrent].beammode == false)
+        if (!other.CompareTag("Player") && !other.CompareTag("Magic") && onlyonce == false)
         {
             explosion();
-            Debug.Log("a");
+           // Debug.Log("a");
         }
 
 
     }
-
-    public void explosion()
+    
+    public   void explosion()
     {
         mesh.enabled = false;
         var particle = explosioneffect.main;
         onlyonce = true;
         float a = (Magic.Instance.magicmoves[savecurrent].radiussize / 100) * Magic.Instance.magicmoves[savecurrent].radiuspercentage;
+        //Debug.Log(a);
         if (Magic.Instance.magicmoves[savecurrent].pullornot == true)
         {
             particle.startSpeed = -20.0f;
@@ -99,21 +71,22 @@ public class forcemagic : MonoBehaviour
             particle.startSpeed = 20.0f;
         }
 
-        
-        camerashake.Instance.startcamerashake(transform.position, Magic.Instance.magicmoves[savecurrent].camerarotationpower, Magic.Instance.magicmoves[savecurrent].distancecamerashake, Magic.Instance.magicmoves[savecurrent].camerashakePower, sphere);
+        sphereradius.radius = a;
+        camerashake.Instance.startcamerashake(transform.position, Magic.Instance.magicmoves[savecurrent].camerarotationpower, Magic.Instance.magicmoves[savecurrent].distancecamerashake, Magic.Instance.magicmoves[savecurrent].camerashakePower, sphereradius);
         explosioneffect.gameObject.SetActive(true);
         explosioneffect.Play();
         firestop.Stop(false);
         force.velocity = Vector3.zero;
         Destroy(gameObject, 0.5f);
-        sphere.radius = a;
+        
+    
+        
     }
-
     private void OnDrawGizmos()
     {
-        if (explosioneffect != null)
+        if (explosioneffect != null && sphereradius != null)
         {
-            Gizmos.DrawWireSphere(explosioneffect.transform.position, sphere.radius);
+            Gizmos.DrawWireSphere(explosioneffect.transform.position, sphereradius.radius);
         }
 
     }

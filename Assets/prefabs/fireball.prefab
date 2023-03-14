@@ -12,13 +12,13 @@ GameObject:
   - component: {fileID: 2893220811074922739}
   - component: {fileID: 7019617657695268385}
   - component: {fileID: 4989535015955625125}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: explosion1
-  m_TagString: Untagged
+  m_TagString: Magic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6089773752230090056
 Transform:
   m_ObjectHideFlags: 0
@@ -603,7 +603,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 200
+    maxNumParticles: 150
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -4882,7 +4882,7 @@ SphereCollider:
   m_GameObject: {fileID: 43656331183686892}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: -0.000000044703484, y: 0, z: 0.00000023841858}
@@ -4897,7 +4897,7 @@ GameObject:
   - component: {fileID: 3605486962282685221}
   - component: {fileID: 6214028975746973076}
   - component: {fileID: 7136796527861467566}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4995,7 +4995,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -5171,8 +5171,8 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     startSize:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 2
+      minMaxState: 0
+      scalar: 4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5224,7 +5224,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 3
+      minMaxState: 0
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -5277,7 +5277,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 3
+      minMaxState: 0
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -5488,7 +5488,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 40
+    maxNumParticles: 30
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -9713,7 +9713,7 @@ GameObject:
   - component: {fileID: 7459178560550511150}
   - component: {fileID: 5307001040663145044}
   - component: {fileID: 3884247504330668445}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: fireball
   m_TagString: Magic
   m_Icon: {fileID: 0}
@@ -9747,7 +9747,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1224405586948984663
 Rigidbody:
@@ -9784,6 +9784,7 @@ MonoBehaviour:
   layertobringinobjects:
     serializedVersion: 2
     m_Bits: 1
+  sphereradius: {fileID: 4989535015955625125}
 --- !u!23 &5307001040663145044
 MeshRenderer:
   m_ObjectHideFlags: 0

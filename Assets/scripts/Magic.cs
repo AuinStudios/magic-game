@@ -28,7 +28,16 @@ public class Magic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //for (int i = 0; i < magicmoves.Count; i++)
+        //{
+        //    float a = (5.0f) * magicmoves[i].howmanytimestoshoot / magicmoves[i].radiuspercentage;
+        //   // float b = a / magicmoves[i].howmanytimestoshoot - magicmoves[i].spread * 10;
+        //    // int e  = a / magicmoves[i].radiuspercentage;
+        //    // a *= 1000;
+        //    //  e *= 1000;
+        //    Debug.Log(a);
+        //    magicmoves[i].damage = a;
+        //}
     }
 
     // Update is called once per frame
@@ -39,9 +48,9 @@ public class Magic : MonoBehaviour
             if (Input.GetKeyDown(typeofmagic[i]))
             {
                 currentcount = i;
-                Quaternion e = Quaternion.Euler(camerarot.eulerAngles.x - 1, MainCamParent.eulerAngles.y, 0);
-               
-                Instantiate(magicmoves[i].typeofmagic , MainCamParent.position + new Vector3(0,1.5f,0) , e );
+
+                StartCoroutine(summon(i));
+
             }
         }
         //foreach (KeyCode kcode in typeofmagic)
@@ -64,5 +73,35 @@ public class Magic : MonoBehaviour
        //    Instantiate(magic , MainCamParent.position + new Vector3(0,1.5f,0) , e );
        // }
     }
-
+    private IEnumerator summon(int i)
+    {
+       // yield return new WaitForSeconds(i / 10);
+       
+        if(magicmoves[i].howmanytimestoshoot >= 3  && magicmoves[i].spread >= 10 && magicmoves[i].radiuspercentage != 100)
+        {
+            
+            float force = magicmoves[i].howmanytimestoshoot * magicmoves[i].spread ;
+           // float force2 = magicmoves[i].howmanytimestoshoot / magicmoves[i].radiuspercentage;
+            force /= magicmoves[i].radiuspercentage / 10;
+            force /= 2;
+            Debug.Log(magicmoves[i].howmanytimestoshoot + force  / 10 );
+            for (int b = 0; b < magicmoves[i].howmanytimestoshoot + force / 10  ; b++)
+            {
+                Quaternion e = Quaternion.Euler(camerarot.eulerAngles.x - 1, MainCamParent.eulerAngles.y, 0);
+                Instantiate(magicmoves[i].typeofmagic, MainCamParent.position + new Vector3(0, 1.5f, 0), e);
+                yield return null;
+            }
+        }
+        else
+        {
+            for (int b = 0; b < magicmoves[i].howmanytimestoshoot; b++)
+            {
+                 Quaternion e = Quaternion.Euler(camerarot.eulerAngles.x - 1, MainCamParent.eulerAngles.y, 0);
+               Instantiate(magicmoves[i].typeofmagic, MainCamParent.position + new Vector3(0, 1.5f, 0), e);
+               // test.transform.localScale = new Vector3(Mathf.Clamp(test.transform.localScale.x, test.transform.localScale.x / 2, test.transform.localScale.x * 2), Mathf.Clamp(test.transform.localScale.y, test.transform.localScale.y / 2, test.transform.localScale.y * 2), Mathf.Clamp(test.transform.localScale.z, test.transform.localScale.z / 2, test.transform.localScale.z * 2));
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
+      
+    }
 }

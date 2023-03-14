@@ -12,18 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72d34b9e8f20f74ab753b604ddaf922, type: 3}
   m_Name: firemagic
   m_EditorClassIdentifier: 
-  radiuspercentage: 100
+  radiuspercentage: 10
   radiussize: 3
-  pullornot: 1
+  howmanytimestoshoot: 10
+  spread: 100
+  pullornot: 0
   detonateion: 0
-  beammode: 1
-  timeruntllstop: 5
-  lengthpercentage: 10
   camerashakePower: 2
   distancecamerashake: 30
   camerarotationpower: 3
-  typeofmagic: {fileID: 4100389625166133878, guid: c7f5de16d023dd34eae3e8bce2990da1,
+  typeofmagic: {fileID: 4100389625166133878, guid: 1ce35aedc038a664e85b76834e003466,
     type: 3}
-  test: {fileID: 5127630387744124379, guid: c7f5de16d023dd34eae3e8bce2990da1, type: 3}
-  damage: 5
+  damage: 1.5
   speed: 20
