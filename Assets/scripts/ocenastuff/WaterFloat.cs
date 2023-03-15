@@ -1,19 +1,20 @@
-using Ditzelgames;
+using AuinDev;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
 public class WaterFloat : MonoBehaviour
 {
     //public properties
-    public float AirDrag = 1;
-    public float WaterDrag = 10;
-    public bool AffectDirection = true;
-    public bool AttachToSurface = false;
+    [SerializeField] private float AirDrag = 1;
+    [SerializeField] private float WaterDrag = 10;
+    [SerializeField] private bool AffectDirection = true;
+    [SerializeField] private bool isnotplayer = true;
     public Transform[] FloatPoints;
-
+    [SerializeField] private bool isonwater = false;
+    protected float timer = 1.0f;
     //used components
     protected Rigidbody Rigidbody;
     protected oceanwave Waves;
@@ -34,8 +35,12 @@ public class WaterFloat : MonoBehaviour
     {
         //get components
         Waves = FindObjectOfType<oceanwave>();
-        Rigidbody = GetComponent<Rigidbody>();
-        Rigidbody.useGravity = false;
+        if (GetComponent<Rigidbody>() != null)
+        {
+            Rigidbody = GetComponent<Rigidbody>();
+            Rigidbody.useGravity = false;
+        }
+
 
         //compute center
         WaterLinePoints = new Vector3[FloatPoints.Length];
@@ -53,49 +58,80 @@ public class WaterFloat : MonoBehaviour
         var pointUnderWater = false;
 
         //set WaterLinePoints and WaterLine
-        for (int i = 0; i < FloatPoints.Length; i++)
+        if (isonwater == true)
         {
-            //height
-            WaterLinePoints[i] = FloatPoints[i].position;
-            WaterLinePoints[i].y = Waves.GetHeight(FloatPoints[i].position);
-            newWaterLine += WaterLinePoints[i].y / FloatPoints.Length;
-            if (WaterLinePoints[i].y > FloatPoints[i].position.y)
-                pointUnderWater = true;
+            for (int i = 0; i < FloatPoints.Length; i++)
+            {
+                //height
+                WaterLinePoints[i] = FloatPoints[i].position;
+                WaterLinePoints[i].y = Waves.GetHeight(FloatPoints[i].position);
+                newWaterLine += WaterLinePoints[i].y / FloatPoints.Length;
+                if (WaterLinePoints[i].y > FloatPoints[i].position.y)
+                    pointUnderWater = true;
+            }
+            TargetUp = PhysicsHelper.GetNormal(WaterLinePoints);
         }
+
 
         var waterLineDelta = newWaterLine - WaterLine;
         WaterLine = newWaterLine;
 
         //compute up vector
-        TargetUp = PhysicsHelper.GetNormal(WaterLinePoints);
+
 
         //gravity
         var gravity = Physics.gravity;
-        Rigidbody.drag = AirDrag;
+        if (Rigidbody != null)
+        {
+            Rigidbody.drag = AirDrag;
+        }
         if (WaterLine > Center.y)
         {
-            Rigidbody.drag = WaterDrag;
+            if (Rigidbody != null)
+            {
+                Rigidbody.drag = WaterDrag;
+            }
+            isonwater = true;
+            timer = 3f;
             //under water
-            if (AttachToSurface)
+            if (isnotplayer)
             {
                 //attach to water surface
-                Rigidbody.position = new Vector3(Rigidbody.position.x, WaterLine - centerOffset.y, Rigidbody.position.z);
+                transform.position = new Vector3(transform.position.x, WaterLine - centerOffset.y, transform.position.z);
+               
             }
             else
             {
+                
+                PlayerMovement.Instance.test = true;
                 //go up
                 gravity = AffectDirection ? TargetUp * -Physics.gravity.y : -Physics.gravity;
                 transform.Translate(Vector3.up * waterLineDelta * 0.9f);
+                PlayerMovement.Instance.test2 = gravity * Mathf.Clamp(Mathf.Abs(WaterLine - Center.y), 0, 1);
+
             }
         }
-        Rigidbody.AddForce(gravity * Mathf.Clamp(Mathf.Abs(WaterLine - Center.y), 0, 1));
+        else
+        {
+            if(Rigidbody == null)
+            {
+              PlayerMovement.Instance.test = false;
+            }
+            
+            timer -= 1.0f * Time.deltaTime;
+            isonwater = timer <= 0 ? isonwater = false : isonwater;
+        }
+        if (Rigidbody != null)
+        {
+            Rigidbody.AddForce(gravity * Mathf.Clamp(Mathf.Abs(WaterLine - Center.y), 0, 1));
+        }
 
         //rotation
-        if (pointUnderWater)
+        if (pointUnderWater && Rigidbody != null)
         {
             //attach to water surface
             TargetUp = Vector3.SmoothDamp(transform.up, TargetUp, ref smoothVectorRotation, 0.2f);
-            Rigidbody.rotation = Quaternion.FromToRotation(transform.up, TargetUp) * Rigidbody.rotation;
+            transform.rotation = Quaternion.FromToRotation(transform.up, TargetUp) * transform.rotation;
         }
 
     }

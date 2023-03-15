@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    #region Singleton
+    public static PlayerMovement Instance { get; private set; }
+    private void Awake()
+    {
+        // If there is an instance, and it's not me, delete myself.
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+    #endregion
     [SerializeField] private CharacterController Player;
     [SerializeField] private Camerafollow maincam;
     [SerializeField] private Transform maincamparent;
@@ -45,6 +60,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded = false;
     [Header("Jump")]
     private float JumpForce = 5;
+
+
+    [Header("test")]
+    [HideInInspector] public bool test;
+    [HideInInspector] public Vector3 test2;
     // Update is called once per frame
     void Update()
     {
@@ -88,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (!isGrounded)
+        if (!isGrounded && !test )
         {
             coyotetimecounter -= Time.deltaTime;
             deaccl -= acclrate / 10 * Time.deltaTime;
@@ -111,9 +131,18 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // gravity stuff ------------------------
-        velocity.y = GetGravityForce();
-
-        Player.Move(velocity * Time.deltaTime);
+        if(test != true)
+        {
+          velocity.y = GetGravityForce();
+            Debug.Log(test);
+          Player.Move(velocity * Time.deltaTime);
+        }
+        else
+        {
+            velocity.y = test2.y;
+            Debug.Log(test2);
+            Player.Move(velocity * Time.deltaTime);
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

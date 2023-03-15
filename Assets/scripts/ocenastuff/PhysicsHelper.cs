@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Ditzelgames
+namespace AuinDev
 {
     public static class PhysicsHelper
     {
@@ -66,7 +66,6 @@ namespace Ditzelgames
 
         public static Vector3 GetNormal(Vector3[] points)
         {
-            //https://www.ilikebigbits.com/2015_03_04_plane_from_points.html
             if (points.Length < 3)
                 return Vector3.up;
 
