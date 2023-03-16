@@ -12,6 +12,7 @@ public class WaterFloat : MonoBehaviour
     [SerializeField] private float WaterDrag = 10;
     [SerializeField] private bool AffectDirection = true;
     [SerializeField] private bool isnotplayer = true;
+   // [SerializeField] private 
     public Transform[] FloatPoints;
     [SerializeField] private bool isonwater = false;
     protected float timer = 1.0f;
@@ -34,7 +35,7 @@ public class WaterFloat : MonoBehaviour
     void Awake()
     {
         //get components
-        Waves = FindObjectOfType<oceanwave>();
+        //Waves = FindObjectOfType<oceanwave>();
         if (GetComponent<Rigidbody>() != null)
         {
             Rigidbody = GetComponent<Rigidbody>();
