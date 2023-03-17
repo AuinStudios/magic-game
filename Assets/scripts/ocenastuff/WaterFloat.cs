@@ -104,11 +104,11 @@ public class WaterFloat : MonoBehaviour
             else
             {
                 
-                PlayerMovement.Instance.test = true;
+              //  PlayerMovement.Instance.test = true;
                 //go up
                 gravity = AffectDirection ? TargetUp * -Physics.gravity.y : -Physics.gravity;
                 transform.Translate(Vector3.up * waterLineDelta * 0.9f);
-                PlayerMovement.Instance.test2 = gravity * Mathf.Clamp(Mathf.Abs(WaterLine - Center.y), 0, 1);
+              //  PlayerMovement.Instance.test2 = gravity * Mathf.Clamp(Mathf.Abs(WaterLine - Center.y), 0, 1);
 
             }
         }
@@ -116,7 +116,7 @@ public class WaterFloat : MonoBehaviour
         {
             if(Rigidbody == null)
             {
-              PlayerMovement.Instance.test = false;
+             // PlayerMovement.Instance.test = false;
             }
             
             timer -= 1.0f * Time.deltaTime;

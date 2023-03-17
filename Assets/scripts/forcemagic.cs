@@ -12,7 +12,7 @@ public class forcemagic : MonoBehaviour
    // private Collider col;
     [SerializeField] private MeshRenderer mesh;
     [SerializeField] private LayerMask layertobringinobjects;
-
+   // private float bbbb;
     private bool onlyonce = false;
     private int savecurrent = 0;
   [SerializeField]  private SphereCollider sphereradius;
@@ -20,14 +20,30 @@ public class forcemagic : MonoBehaviour
     void Awake()
     {
         savecurrent = Magic.Instance.currentcount;
-        //float b =   Magic.Instance.magicmoves[savecurrent].howmanytimestoshoot;
-        float a = (transform.localScale.x )   * Magic.Instance.magicmoves[savecurrent].radiuspercentage / 100;
-       // a /= 2;
-      a =  Mathf.Clamp(a, 0.1f, 0.5f);
+       // float a = (0.5f/ 100) * Magic.Instance.magicmoves[savecurrent].radiuspercentage;
+          float b = transform.localScale.x /4;
+        //    b -= transform.localScale.x;
+        float a = (b + Magic.Instance.magicmoves[savecurrent].radiuspercentage/ 100    ) - Magic.Instance.magicmoves[savecurrent].spread / 1000 / b  ;
+        a *= a / Magic.Instance.magicmoves[savecurrent].howmanytimestoshoot ;
+        a = a <= 0.1 ? a += Magic.Instance.magicmoves[savecurrent].radiuspercentage/ 1000 : a;
+        //a *= Magic.Instance.magicmoves[savecurrent].radiuspercentage;
+        // float a = b   - Magic.Instance.magicmoves[savecurrent].spread/ Magic.Instance.magicmoves[savecurrent].howmanytimestoshoot ;
+        //  a = Mathf.Abs(a);
+        // a /= 10;
+        Debug.Log(a);
+      //  a =  Mathf.Clamp(a, 0.1f, 0.5f);
+       
+        transform.localScale = new Vector3(a,a,a);
+        
+           
+      //  a = Mathf.Abs(a);
+       // float d = (Magic.Instance.magicmoves[savecurrent].spread / 100) * b;
+        // a /= 2;
+        
         force.AddForce(transform.forward * Magic.Instance.magicmoves[savecurrent].speed + transform.right * Random.Range(-Magic.Instance.magicmoves[savecurrent].spread , Magic.Instance.magicmoves[savecurrent].spread) / Magic.Instance.magicmoves[savecurrent].radiuspercentage + transform.up * Random.Range(-Magic.Instance.magicmoves[savecurrent].spread, Magic.Instance.magicmoves[savecurrent].spread) / Magic.Instance.magicmoves[savecurrent].radiuspercentage, ForceMode.Impulse);
             explosioneffect.gameObject.SetActive(false);
             explosioneffect.Stop();
-        transform.localScale = new Vector3(a,a,a);
+       
         Destroy(gameObject, 4);
     }
     private void Update()

@@ -77,13 +77,13 @@ public class Magic : MonoBehaviour
     {
        // yield return new WaitForSeconds(i / 10);
        
-        if(magicmoves[i].howmanytimestoshoot >= 3  && magicmoves[i].spread >= 10 && magicmoves[i].radiuspercentage != 100)
+        if(magicmoves[i].howmanytimestoshoot >= 3  && magicmoves[i].spread >= 10)
         {
             
             float force = magicmoves[i].howmanytimestoshoot * magicmoves[i].spread ;
            // float force2 = magicmoves[i].howmanytimestoshoot / magicmoves[i].radiuspercentage;
             force /= magicmoves[i].radiuspercentage / 10;
-            force /= 2;
+           // force /= 2;
             Debug.Log(magicmoves[i].howmanytimestoshoot + force  / 10 );
             for (int b = 0; b < magicmoves[i].howmanytimestoshoot + force / 10  ; b++)
             {

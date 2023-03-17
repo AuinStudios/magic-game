@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72d34b9e8f20f74ab753b604ddaf922, type: 3}
   m_Name: firemagic
   m_EditorClassIdentifier: 
-  radiuspercentage: 10
+  radiuspercentage: 100
   radiussize: 3
   howmanytimestoshoot: 10
   spread: 100

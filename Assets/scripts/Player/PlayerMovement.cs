@@ -62,9 +62,9 @@ public class PlayerMovement : MonoBehaviour
     private float JumpForce = 5;
 
 
-    [Header("test")]
-    [HideInInspector] public bool test;
-    [HideInInspector] public Vector3 test2;
+   // [Header("test")]
+   // [HideInInspector] public bool test;
+   // [HideInInspector] public Vector3 test2;
     // Update is called once per frame
     void Update()
     {
@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (!isGrounded && !test )
+        if (!isGrounded )
         {
             coyotetimecounter -= Time.deltaTime;
             deaccl -= acclrate / 10 * Time.deltaTime;
@@ -131,19 +131,21 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // gravity stuff ------------------------
-        if(test != true)
-        {
-          velocity.y = GetGravityForce();
-            Debug.Log(test);
-          Player.Move(velocity * Time.deltaTime);
-        }
-        else
-        {
-            velocity.y = test2.y;
-            Debug.Log(test2);
-            Player.Move(velocity * Time.deltaTime);
-        }
-
+        //  if(test != true)
+        //  {
+        //    velocity.y = GetGravityForce();
+        //     // Debug.Log(test);
+        //    Player.Move(velocity * Time.deltaTime);
+        //  }
+        //  else
+        //  {
+        //      velocity.y = test2.y;
+        //    //  Debug.Log(test2);
+        //      Player.Move(velocity * Time.deltaTime);
+        //  }
+        velocity.y = GetGravityForce();
+        // Debug.Log(test);
+        Player.Move(velocity * Time.deltaTime);
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpbuffercounter = jumpbuffertime;

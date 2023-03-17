@@ -125,14 +125,16 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _a: 0.5
-    - _depth: 1.64
+    - _depth: 6.45
+    - _depth_1: 0.1
     - _displacement: 0.24
     - _normal_sterngth: 1
     - _normalmaptilting: 1
+    - _shore_depth: 1
     - _size: 0.42
-    - _somethin: 0.5
+    - _somethin: 0.33
     - _sterngth: 2
-    - _tilting: 0.1
+    - _tilting: 1
     - _wavefrequency: 0.1
     - _wavescroll: 0.1
     - _wavesize: 0.1
