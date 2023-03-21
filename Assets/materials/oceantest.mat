@@ -134,7 +134,7 @@ Material:
     - _size: 0.42
     - _somethin: 0.33
     - _sterngth: 2
-    - _tilting: 1
+    - _tilting: 0.5
     - _wavefrequency: 0.1
     - _wavescroll: 0.1
     - _wavesize: 0.1

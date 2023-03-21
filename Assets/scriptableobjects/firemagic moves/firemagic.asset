@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radiuspercentage: 100
   radiussize: 3
-  howmanytimestoshoot: 10
+  howmanytimestoshoot: 2
   spread: 100
   pullornot: 0
   detonateion: 0
@@ -24,4 +24,4 @@ MonoBehaviour:
   typeofmagic: {fileID: 4100389625166133878, guid: 1ce35aedc038a664e85b76834e003466,
     type: 3}
   damage: 1.5
-  speed: 20
+  speed: 50
