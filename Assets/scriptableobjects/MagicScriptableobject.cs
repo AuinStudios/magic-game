@@ -10,8 +10,9 @@ public class MagicScriptableobject : ScriptableObject
     public float radiussize = 3;
     [Range(1,10)]
     public float howmanytimestoshoot = 3;
-    [Range(1 ,100)]
-    public float spread = 10;
+   
+   // [Range(1 ,100)]
+   // public float spread = 10;
     [Header("Extra stuff")]
     public bool pullornot = false;
     public bool detonateion = false;
@@ -29,8 +30,8 @@ public class MagicScriptableobject : ScriptableObject
 //    public Collider test;
     [Header("stats")]
     public float damage = 5;
-    
-    public int speed = 30;
+     public int speed = 10;
+    //public int speed = 30;
 
  
 }

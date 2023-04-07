@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 movedash = Vector3.zero;
 
     private Vector3 frictionlerp = Vector3.zero;
+    private Vector3 frictionlerpref;
     [Header("Quaternions")]
     private Quaternion playerot = Quaternion.identity;
     [Header("gravity")]
@@ -43,12 +44,15 @@ public class PlayerMovement : MonoBehaviour
     private float maxspeed = 20.0f;
     private float normalmaxspeed = 7.0f;
     [Header("accleration")]
+    
     private float acclrate = 15.0f;
     private float deaccl = 0.0f;
+   
     [Header("Dash")]
     private float dashtimer = 0.0f;
     private float dashcooldown = 6.0f;
     [Header("Friction")]
+    [SerializeField]
     private float friction = 4.5f;
     [Header("Coyote time")]
     private float coyotetime = 0.2f;
@@ -76,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         dashcooldown = dashcooldown > 0 ? dashcooldown -= 5.0f * Time.deltaTime : dashcooldown = 0.0f;
         dashtimer =  dashtimer > 0? dashtimer -= 10.0f * Time.deltaTime: dashtimer = 0.0f;
         
-        frictionlerp = Vector3.Lerp(frictionlerp , move, friction * Time.deltaTime);
+        //frictionlerp = Vector3.Lerp(frictionlerp , move, friction * Time.deltaTime);
         
         if ( Input.GetKeyDown(KeyCode.LeftShift) && dashcooldown <= 0 )
         {
@@ -89,15 +93,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (direction.x != 0 && dashtimer <= 0.0f || direction.y != 0 && dashtimer <= 0.0f)
         {
-            deaccl =   deaccl < normalmaxspeed ? deaccl += acclrate * Time.deltaTime : deaccl -= acclrate * Time.deltaTime;
-             
-            move = currentRunSpeedMultiplier * normalmaxspeed * (Vector3.Normalize(maincam.transform.right * direction.x + maincamparent.forward * direction.y));
+            deaccl = deaccl < normalmaxspeed ? deaccl += acclrate * Time.deltaTime : deaccl -= acclrate * Time.deltaTime;
+            move = currentRunSpeedMultiplier * normalmaxspeed * (Vector3.Normalize(maincam.transform.right * direction.x + maincamparent.forward * direction.y));;
+
+            frictionlerp = Vector3.SmoothDamp(frictionlerp,  move , ref  frictionlerpref , friction * Time.deltaTime);
             
         }
         else if(deaccl > 0)
         {
-            deaccl -= acclrate * 1.2f * Time.deltaTime;
-            
+            deaccl -= acclrate * Time.deltaTime;
+           
         }
 
         if (direction.x != 0 && maincam.shiftlock == false || direction.y != 0 && maincam.shiftlock == false)
@@ -121,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(dashtimer <= 0)
         {
-          Player.Move( deaccl * frictionlerp   * Time.deltaTime);
+          Player.Move( deaccl *  frictionlerp   * Time.deltaTime);
         }
         else if( dashtimer > 0.0f)
         {
@@ -129,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
             Player.Move( deaccl *   movedash * Time.deltaTime);
             dash();
         }
-
+        
         // gravity stuff ------------------------
         //  if(test != true)
         //  {
