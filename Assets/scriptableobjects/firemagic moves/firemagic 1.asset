@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72d34b9e8f20f74ab753b604ddaf922, type: 3}
   m_Name: firemagic 1
   m_EditorClassIdentifier: 
-  radiuspercentage: 100
-  radiussize: 3
-  howmanytimestoshoot: 3
-  spread: 2
+  radiusPercentage: 10
+  radiusSize: 3
+  howmanytimestoshoot: 1
   pullornot: 0
   detonateion: 0
   camerashakePower: 2

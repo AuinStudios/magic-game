@@ -29,7 +29,7 @@ public class camerashake : MonoBehaviour
     {
         float a = (maincam.position - distancebetweenmagic).magnitude;
         float force = (1 - Mathf.Clamp01(a / distance));
-        duration = duration - a ;
+        duration -= a;
        
         while ( duration > 0)
         {

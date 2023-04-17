@@ -6,8 +6,8 @@ public class MagicScriptableobject : ScriptableObject
 {
     [Header("editing magic stuff")]
     [Range(10 ,100)]
-    public float radiuspercentage = 100;
-    public float radiussize = 3;
+    public float radiusPercentage = 100;
+    public float radiusSize = 3;
     [Range(1,10)]
     public float howmanytimestoshoot = 3;
    

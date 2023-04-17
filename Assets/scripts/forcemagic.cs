@@ -12,16 +12,18 @@ public class forcemagic : MonoBehaviour
    // private Collider col;
     [SerializeField] private MeshRenderer mesh;
     [SerializeField] private LayerMask layertobringinobjects;
-   // private float bbbb;
     private bool onlyonce = false;
     private int savecurrent = 0;
   [SerializeField]  private SphereCollider sphereradius;
+    [Header("FireballMovment")]
     private Vector3 endpos;
+    //private Vector3 curvepos = Vector3.zero;
     // Start is called before the first frame update
     void Awake()
     {
-        //Magic.Instance.magicmoves[savecurrent].speed;
+        //curvepos = new Vector3(1, 1, 1);
         #region testing stuff
+        //Magic.Instance.magicmoves[savecurrent].speed;
         // float a = (0.5f/ 100) * Magic.Instance.magicmoves[savecurrent].radiuspercentage;
         //    float b = transform.localScale.x /4;
         //    b -= transform.localScale.x;
@@ -43,25 +45,19 @@ public class forcemagic : MonoBehaviour
         // a /= 2;
 
         // force.AddForce(transform.forward * Magic.Instance.magicmoves[savecurrent].speed + transform.right * Random.Range(-Magic.Instance.magicmoves[savecurrent].spread , Magic.Instance.magicmoves[savecurrent].spread) / Magic.Instance.magicmoves[savecurrent].radiuspercentage + transform.up * Random.Range(-Magic.Instance.magicmoves[savecurrent].spread, Magic.Instance.magicmoves[savecurrent].spread) / Magic.Instance.magicmoves[savecurrent].radiuspercentage, ForceMode.Impulse);
+        //float a = (0.5f / 100) * Magic.Instance.magicmoves[savecurrent].radiuspercentage * 10;
+        // transform.localScale = new Vector3(a, a, a);
         #endregion
         savecurrent = Magic.Instance.currentcount;
         explosioneffect.gameObject.SetActive(false);
             explosioneffect.Stop();
         endpos = transform.position + transform.forward *100;
-        //float a = (0.5f / 100) * Magic.Instance.magicmoves[savecurrent].radiuspercentage * 10;
-       // transform.localScale = new Vector3(a, a, a);
-
-        LeanTween.move(gameObject, endpos, 5);
-       //  force.MovePosition ( endpos * Time.fixedDeltaTime);
-        
-        
-        // endpos = transform.position +   a * Time.fixedDeltaTime;
-        //Destroy(gameObject, 4);
+      
+         LeanTween.move(gameObject, endpos, 5);
     }
     private void Update()
     {
-
-        
+        //Debug.Log(curvepos);
         if (Input.GetKeyUp(Magic.Instance.typeofmagic[savecurrent]) && Magic.Instance.magicmoves[savecurrent].detonateion == true && onlyonce == false)
         {
            explosion();
@@ -87,10 +83,11 @@ public class forcemagic : MonoBehaviour
     
     public   void explosion()
     {
+        LeanTween.cancel(gameObject);
         mesh.enabled = false;
         var particle = explosioneffect.main;
         onlyonce = true;
-        float a = (Magic.Instance.magicmoves[savecurrent].radiussize / 100) * Magic.Instance.magicmoves[savecurrent].radiuspercentage;
+        float a = (Magic.Instance.magicmoves[savecurrent].radiusSize / 100) * Magic.Instance.magicmoves[savecurrent].radiusPercentage;
         //Debug.Log(a);
         if (Magic.Instance.magicmoves[savecurrent].pullornot == true)
         {

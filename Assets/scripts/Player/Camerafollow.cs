@@ -73,7 +73,7 @@ public class Camerafollow : MonoBehaviour
         }
         else if (shiftlock == true)
         {
-            input.x -= Input.GetAxisRaw("Mouse X") * 100 * Time.fixedDeltaTime;
+            input.x += Input.GetAxisRaw("Mouse X") * 100 * Time.fixedDeltaTime;
             smoothplayerrotation = Quaternion.Euler(playerotation.rotation.x, -input.x, playerotation.rotation.z);
             playerotation.rotation = Quaternion.Lerp(playerotation.rotation, smoothplayerrotation, 11 * Time.deltaTime);
             cameradesiredpos = shiftlockoffset.TransformPoint(new Vector3(dollydir.x * -maxdistance , transform.localPosition.y * -maxdistance, dollydir.z * -maxdistance));

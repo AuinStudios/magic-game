@@ -126,12 +126,12 @@ public class PlayerMovement : MonoBehaviour
 
         if(dashtimer <= 0)
         {
-          Player.Move( deaccl *  frictionlerp   * Time.deltaTime);
+          Player.Move( deaccl * Time.deltaTime * frictionlerp);
         }
         else if( dashtimer > 0.0f)
         {
             // deaccl -= accl * 20 * Time.deltaTime;
-            Player.Move( deaccl *   movedash * Time.deltaTime);
+            Player.Move( deaccl * Time.deltaTime * movedash);
             dash();
         }
         
