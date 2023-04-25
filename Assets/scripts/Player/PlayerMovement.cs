@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float currentRunSpeedMultiplier = 1.0f;
     private float maxspeed = 20.0f;
-    private float normalmaxspeed = 7.0f;
+    private float normalmaxspeed = 4.0f;
     [Header("accleration")]
     
     private float acclrate = 15.0f;
